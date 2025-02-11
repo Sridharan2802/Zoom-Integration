@@ -1,0 +1,52 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 02-11-2025
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>
+    <div class="slds-form-element">
+        <label class="slds-form-element__label">Select Contacts</label>
+        <div class="slds-form-element__control">
+            <input
+                type="text"
+                class="slds-input"
+                placeholder="Search Contacts..."
+                oninput={handleSearch}
+                value={searchTerm}
+            />
+            <template if:true={isSearching}>
+                <p>Searching...</p>
+            </template>
+            <template if:false={isSearching}>
+                <ul class="slds-listbox slds-listbox_vertical">
+                    <template for:each={contacts} for:item="contact">
+                        <li
+                            key={contact.Id}
+                            data-id={contact.Id}
+                            class="slds-listbox__item"
+                            onclick={handleSelect}
+                        >
+                            {contact.Name} ({contact.Email})
+                        </li>
+                    </template>
+                </ul>
+            </template>
+        </div>
+        <div class="slds-m-top_medium">
+            <template for:each={selectedContacts} for:item="contact">
+                <div key={contact.Id} class="slds-p-around_small slds-border_bottom">
+                    <span>{contact.Name} ({contact.Email})</span>
+                    <button
+                        class="slds-button slds-button_icon slds-button_icon-small"
+                        data-id={contact.Id}
+                        onclick={handleRemove}
+                    >
+                        <lightning-icon icon-name="utility:close" size="small"></lightning-icon>
+                    </button>
+                </div>
+            </template>
+        </div>
+    </div>
+</template>
