@@ -1,0 +1,22 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 02-11-2025
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>
+    <lightning-card title="Zoom Meeting Integration" icon-name="utility:events">
+        <div class="slds-p-around_medium">
+            <lightning-input label="Topic" name="topic" value={topic} onchange={handleChange}></lightning-input>
+            <lightning-input label="Start Time" name="startTime" type="datetime-local" value={startTime} onchange={handleChange}></lightning-input>
+            <lightning-input label="Duration (minutes)" name="duration" type="number" value={duration} onchange={handleChange}></lightning-input>
+            <lightning-input label="Time Zone" name="timeZone" value={timeZone} onchange={handleChange}></lightning-input>
+            <c-multi-select-lookup onselectionchange={handleContactSelection}></c-multi-select-lookup>
+            <lightning-input label="Meeting ID (for Update)" name="meetingId" value={meetingId} onchange={handleChange}></lightning-input>
+
+            <lightning-button variant="brand" label="Create Meeting" onclick={handleCreate} class="slds-m-top_small"></lightning-button>
+            <lightning-button variant="neutral" label="Update Meeting" onclick={handleUpdate} class="slds-m-top_small slds-m-left_small"></lightning-button>
+        </div>
+    </lightning-card>
+</template>
