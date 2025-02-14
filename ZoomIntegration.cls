@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : ChangeMeIn@UserSettingsUnder.SFDoc
  * @group             : 
- * @last modified on  : 02-11-2025
+ * @last modified on  : 02-14-2025
  * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 **/
 public with sharing class ZoomIntegration {
@@ -34,11 +34,7 @@ public with sharing class ZoomIntegration {
 
         insert zoomMeet;
     
-    
-    
     }
-
-
 
     return meetingDetails;
     }
@@ -56,31 +52,9 @@ public with sharing class ZoomIntegration {
         Map<String, String> meetingDetails = sendHttpRequest(jsonString, 'PATCH', meetingId); // Update Meeting
     
     
-        if (meetingDetails != null && meetingDetails.containsKey('joinUrl')) {
-        sendMeetingEmail(userEmail, topic, meetingDetails.get('joinUrl'),meetingDetails.get('passcode'),meetingDetails.get('start_time'),meetingDetails.get('duration'));  // Send Email with Meeting Link
-    
-        //update meeting details in custom Object
-        Zoom_Meeting__c zoomMeet = new Zoom_Meeting__c();
-        zoomMeet.Meeting_Topic__c = topic;
-        zoomMeet.Contact_Emails__c = userEmail;
-        zoomMeet.Duration__c = Decimal.valueOf(meetingDetails.get('duration')); // Convert String to Decimal
-        zoomMeet.Start_Time__c = Datetime.valueOf(meetingDetails.get('start_time').replace('T', ' ').replace('Z', '')); // Convert String to Datetime
-        zoomMeet.Passcode__c = meetingDetails.get('passcode');
-        zoomMeet.Invite_Link__c = meetingDetails.get('joinUrl');
-        zoomMeet.Time_Zone__c=timeZone;
-
-        update zoomMeet;
-    
-    
-    
     }
 
-
-
     return meetingDetails;
-    
-    
-    
     
     
     }
