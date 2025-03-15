@@ -1,52 +1,47 @@
-<!--
-  @description       : 
-  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
-  @group             : 
-  @last modified on  : 02-11-2025
-  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
--->
 <template>
-    <div class="slds-form-element">
-        <label class="slds-form-element__label">Select Contacts</label>
-        <div class="slds-form-element__control">
-            <input
-                type="text"
-                class="slds-input"
-                placeholder="Search Contacts..."
-                oninput={handleSearch}
-                value={searchTerm}
-            />
-            <template if:true={isSearching}>
-                <p>Searching...</p>
-            </template>
-            <template if:false={isSearching}>
-                <ul class="slds-listbox slds-listbox_vertical">
-                    <template for:each={contacts} for:item="contact">
-                        <li
-                            key={contact.Id}
-                            data-id={contact.Id}
-                            class="slds-listbox__item"
-                            onclick={handleSelect}
-                        >
-                            {contact.Name} ({contact.Email})
-                        </li>
+    <div class="slds-combobox_container slds-has-selection">
+        <div class="slds-combobox__form-element">
+            <!-- Container for pills and search input -->
+            <div class="pill-input-container">
+                <!-- Selected contact pills -->
+                <template for:each={selectedContacts} for:item="contact">
+                    <span key={contact.Id} class="slds-pill">
+                        <span class="slds-avatar slds-avatar_x-small slds-avatar_circle slds-m-right_xx-small">
+                            <lightning-icon icon-name="standard:contact" size="x-small"></lightning-icon>
+                        </span>
+                        <span class="slds-pill__label" title={contact.Name}>{contact.Name}</span>
+                        <button class="slds-button slds-button_icon slds-pill__remove" 
+                                data-id={contact.Id} 
+                                onclick={handleRemove}>
+                            <lightning-icon icon-name="utility:close" size="x-small"></lightning-icon>
+                        </button>
+                    </span>
+                </template>
+                <!-- Search input -->
+                <input type="text"
+                       class="search-input"
+                       placeholder="Search Contacts..."
+                       oninput={handleSearch}
+                       value={searchTerm} />
+
+                       <template if:true={isSearching}>
+                        <p>Searching...</p>
                     </template>
-                </ul>
-            </template>
-        </div>
-        <div class="slds-m-top_medium">
-            <template for:each={selectedContacts} for:item="contact">
-                <div key={contact.Id} class="slds-p-around_small slds-border_bottom">
-                    <span>{contact.Name} ({contact.Email})</span>
-                    <button
-                        class="slds-button slds-button_icon slds-button_icon-small"
-                        data-id={contact.Id}
-                        onclick={handleRemove}
-                    >
-                        <lightning-icon icon-name="utility:close" size="small"></lightning-icon>
-                    </button>
-                </div>
-            </template>
+                    <template if:false={isSearching}>
+                        <ul class="slds-listbox slds-listbox_vertical">
+                            <template for:each={contacts} for:item="contact">
+                                <li
+                                    key={contact.Id}
+                                    data-id={contact.Id}
+                                    class="slds-listbox__item"
+                                    onclick={handleSelect}
+                                >
+                                    {contact.Name} 
+                                </li>
+                            </template>
+                        </ul>
+                    </template>
+            </div>
         </div>
     </div>
 </template>
